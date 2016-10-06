@@ -1,12 +1,20 @@
 package main
 
 import (
-	"io/ioutil"
+	"bufio"
 	"log"
 	"os"
 )
 
 func main() {
-	bytes, err := ioutil.ReadAll(os.Stdin)
-	log.Println(err, string(bytes))
+	scanner := bufio.NewScanner(os.Stdin)
+
+	for scanner.Scan() {
+		line := scanner.Text()
+		log.Println(line)
+	}
+
+	if err := scanner.Err(); err != nil {
+		log.Fatal(err)
+	}
 }
