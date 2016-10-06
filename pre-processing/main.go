@@ -66,8 +66,8 @@ func main() {
 	}()
 
 	go func() {
-		for line := range(onlyAlpha) {
-			log.Println(line)
+		for _ = range(onlyAlpha) {
+			// log.Println(line)
 		}
 		done <- true
 	}()
