@@ -33,10 +33,10 @@ func scanStdIn(output chan string, errors chan error) {
 
 func main() {
 
-	stdInLines := make(chan string)
+	stdInLines := make(chan string, 10000)
 	stdInErrors := make(chan error)
-	onlyAlpha := make(chan string)
-	alphaWorkers := 100
+	onlyAlpha := make(chan string, 10000)
+	alphaWorkers := 10
 
 	go scanStdIn(stdInLines, stdInErrors)
 
