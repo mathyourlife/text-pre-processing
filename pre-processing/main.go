@@ -86,8 +86,8 @@ func main() {
 	}()
 
 	go func() {
-		for line := range(lowerCase) {
-			log.Println(line)
+		for _ = range(lowerCase) {
+			// log.Println(line)
 		}
 		done <- true
 	}()
@@ -100,7 +100,7 @@ RUN_LOOP:
 	for {
 		select {
 			case <-ticker.C:
-				stdoutLog.Printf("stdInLines len: %d, onlyAlpha len: %d, lowerCase len: %d", len(stdInLines), len(onlyAlpha), len(lowerCase))
+				stdoutLog.Printf("stdInLines len:\t%d\tonlyAlpha len:\t%d\tlowerCase len:\t%d", len(stdInLines), len(onlyAlpha), len(lowerCase))
 			case <- done:
 				break RUN_LOOP
 		}
