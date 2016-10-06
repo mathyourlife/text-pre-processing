@@ -36,6 +36,7 @@ func main() {
 	stdInLines := make(chan string)
 	stdInErrors := make(chan error)
 	onlyAlpha := make(chan string)
+	alphaWorkers := 10
 
 	go scanStdIn(stdInLines, stdInErrors)
 
@@ -45,7 +46,9 @@ func main() {
 		}
 	}()
 
-	go removePunct(stdInLines, onlyAlpha)
+	for n := 0; n < alphaWorkers; n++ {
+		go removePunct(stdInLines, onlyAlpha)
+	}
 
 	for line := range(onlyAlpha) {
 		log.Println(line)
