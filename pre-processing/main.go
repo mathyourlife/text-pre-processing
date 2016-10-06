@@ -4,7 +4,15 @@ import (
 	"bufio"
 	"log"
 	"os"
+	"regexp"
 )
+
+func removePunct(input chan string, output chan string) {
+	re := regexp.MustCompile("[^a-zA-Z\\s]")
+	for line := range input {
+		output <- re.ReplaceAllString(line, "")
+	}
+}
 
 func scanStdIn(output chan string, errors chan error) {
 	scanner := bufio.NewScanner(os.Stdin)
@@ -23,11 +31,11 @@ func scanStdIn(output chan string, errors chan error) {
 	errors <- err
 }
 
-
 func main() {
 
 	stdInLines := make(chan string)
 	stdInErrors := make(chan error)
+	onlyAlpha := make(chan string)
 
 	go scanStdIn(stdInLines, stdInErrors)
 
@@ -37,7 +45,9 @@ func main() {
 		}
 	}()
 
-	for line := range(stdInLines) {
+	go removePunct(stdInLines, onlyAlpha)
+
+	for line := range(onlyAlpha) {
 		log.Println(line)
 	}
 }
