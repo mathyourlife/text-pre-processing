@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-func main() {
+func scan_stdin() error {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for scanner.Scan() {
@@ -14,7 +14,13 @@ func main() {
 		log.Println(line)
 	}
 
-	if err := scanner.Err(); err != nil {
+	return scanner.Err()
+}
+
+
+func main() {
+	err := scan_stdin()
+	if err != nil {
 		log.Fatal(err)
 	}
 }
