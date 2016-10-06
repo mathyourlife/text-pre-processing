@@ -36,7 +36,7 @@ func main() {
 	stdInLines := make(chan string)
 	stdInErrors := make(chan error)
 	onlyAlpha := make(chan string)
-	alphaWorkers := 10
+	alphaWorkers := 100
 
 	go scanStdIn(stdInLines, stdInErrors)
 
